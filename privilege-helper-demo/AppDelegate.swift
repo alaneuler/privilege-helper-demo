@@ -7,24 +7,28 @@
 
 import Cocoa
 
-@main
+/// Used as DTO
+struct Result {
+  var output = "default"
+}
+
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-  
-
-
   func applicationDidFinishLaunching(_ aNotification: Notification) {
-    // Insert code here to initialize your application
+    let remoteWrapper = RemoteHelper.INSTANCE.getRemote()
+    var result = Result()
+    if let helperProtocol = remoteWrapper {
+      helperProtocol.execteCmd(cmdPath: "/usr/bin/whoami", args: [],
+                              completion: {output in
+        result.output = output
+      })
+      // TODO: remove sleep code
+      sleep(1)
+      fputs(result.output, stdout)
+    }
+    exit(0)
   }
-
-  func applicationWillTerminate(_ aNotification: Notification) {
-    // Insert code here to tear down your application
-  }
-
+  
   func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
     return true
   }
-
-
 }
-
