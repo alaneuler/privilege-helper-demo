@@ -12,6 +12,7 @@ class DemoPrivilegeHelper: NSObject, NSXPCListenerDelegate, HelperProtocol {
   /// This class also need to implement the NSXPCListenerDelegate
   /// and hold an instance of NSXPCListener to listen for incoming connections
   let listener: NSXPCListener
+  /// Don't change this method's signature!
   func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
     newConnection.exportedInterface = NSXPCInterface(with: HelperProtocol.self)
     newConnection.remoteObjectInterface = NSXPCInterface(with: RemoteApplicationProtocol.self)
